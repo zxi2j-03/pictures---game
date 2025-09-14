@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ذاكرة الرموز — zxi2j.03</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- خلفية متحركة -->
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+  <!-- شريط المعلومات -->
+  <header class="hud">
+    <div class="pill">👤 الدور: <span id="playerLabel">—</span></div>
+    <div class="pill">🧠 النقاط: <span id="scoreLabel">0</span></div>
+    <div class="pill">⏱️ الوقت: <span id="timerLabel">—</span></div>
+  </header>
+
+  <!-- منطقة اللعبة -->
+  <main class="container">
+    <h1 class="title">ذاكرة الرموز</h1>
+
+    <!-- إعدادات البداية -->
+    <div id="setupPanel" class="panel">
+      <div class="group">
+        <label class="label">اختر النمط:</label>
+        <div class="row">
+          <label class="chip"><input type="radio" name="mode" value="solo" checked /> فردي</label>
+          <label class="chip"><input type="radio" name="mode" value="duo" /> ثنائي</label>
+        </div>
+      </div>
+
+      <div class="group">
+        <label class="label">اختر مستوى الصعوبة:</label>
+        <div class="row">
+          <label class="chip"><input type="radio" name="difficulty" value="easy" checked /> سهل (6 رموز)</label>
+          <label class="chip"><input type="radio" name="difficulty" value="medium" /> متوسط (9 رموز)</label>
+          <label class="chip"><input type="radio" name="difficulty" value="hard" /> صعب (12 رمز)</label>
+        </div>
+      </div>
+
+      <button id="startBtn" class="btn primary">ابدأ الجولة</button>
+    </div>
+
+    <!-- حالة اللعبة -->
+    <div id="status" class="status">اختر النمط والصعوبة ثم اضغط "ابدأ الجولة"</div>
+
+    <!-- شبكة الرموز -->
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <!-- توقيع شخصي -->
+  <div id="branding">
+    <img src="Tessa.jpg" alt="zxi2j.03" id="profilePic" />
+    <span id="username">zxi2j.03</span>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
