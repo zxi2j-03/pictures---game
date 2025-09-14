@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
       grid.appendChild(btn);
     });
 
-    timeLeft = 20;
+    timeLeft = 15;
     timerLabel.textContent = timeLeft;
     clearInterval(timer);
     timer = setInterval(() => {
@@ -114,7 +114,20 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       btn.classList.add("wrong");
     }
+
     updateLabels();
+
+    const correctCount = grid.querySelectorAll(".correct").length;
+    if (correctCount === showing.length) {
+      clearInterval(timer);
+      statusEl.textContent = "🎉 ممتاز! لقد فزت بالجولة!";
+      isChallengePhase = false;
+
+      if (gameMode === "duo") {
+        currentPlayer = currentPlayer === 1 ? 2 : 1;
+        updateLabels();
+      }
+    }
   }
 
   function endRound() {
