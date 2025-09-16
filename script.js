@@ -1,23 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // عناصر الواجهة
-  const enterBtn = document.getElementById("enterBtn");
-  const startScreen = document.getElementById("startScreen");
-  const hud = document.getElementById("hud");
-  const container = document.getElementById("container");
-  const branding = document.getElementById("branding");
+  const grid = document.getElementById("grid");
   const startBtn = document.getElementById("startBtn");
   const statusEl = document.getElementById("status");
   const scoreLabel = document.getElementById("scoreLabel");
   const timerLabel = document.getElementById("timerLabel");
   const playerLabel = document.getElementById("playerLabel");
-  const grid = document.getElementById("grid");
-  const endScreen = document.getElementById("endScreen");
-  const endTitle = document.getElementById("endTitle");
-  const endSummary = document.getElementById("endSummary");
-  const restartBtn = document.getElementById("restartBtn");
 
-  // بيانات اللعبة
-  const emojis = ["🐱","🍕","🚀","🎈","🐶","🌸","🦄","🍩","🎮","🐼","🍉","🧸","🦋","🍔","🐧"];
+  const emojis = ["🐱", "🍕", "🚀", "🎈", "🐶", "🌸", "🦄", "🍩", "🎮", "🐼", "🍉", "🧸", "🦋", "🍔", "🐧"];
   const pastelColors = ["#FADADD", "#D0E8F2", "#FFFACD", "#E6DAF8", "#D4F8D4"];
 
   let showing = [];
@@ -29,40 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let timer;
   let timeLeft = 0;
   let isChallengePhase = false;
-  let inRound = false;
-
   let maxAttempts = 0;
   let attemptsUsed = 0;
   let correctCount = 0;
   let wrongCount = 0;
 
-  // شاشة البداية
-  enterBtn.addEventListener("click", () => {
-    startScreen.classList.add("hidden");
-    hud.classList.remove("hidden");
-    container.classList.remove("hidden");
-    branding.classList.remove("hidden");
-  });
-
-  // زر بدء الجولة
-  startBtn.addEventListener("click", () => {
-    if (inRound) return;
-    startRound();
-  });
-
-  // زر إعادة الجولة
-  restartBtn.addEventListener("click", () => {
-    endScreen.classList.add("hidden");
-    startRound();
-  });
-
-  // تحديث الخلفية
   function setRandomBackground() {
     const color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
     document.body.style.background = color;
   }
 
-  // تحديث المعلومات
   function updateLabels() {
     playerLabel.textContent = gameMode === "duo" ? `اللاعبة ${currentPlayer}` : "فردي";
     scoreLabel.textContent = gameMode === "duo"
@@ -70,10 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       : scoreP1;
   }
 
-  // بدء الجولة
   function startRound() {
-    inRound = true;
-    startBtn.disabled = true;
     gameMode = document.querySelector('input[name="mode"]:checked').value;
     difficulty = document.querySelector('input[name="difficulty"]:checked').value;
     updateLabels();
@@ -115,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   }
 
-  // عرض التحدي
   function showChallenge() {
     statusEl.textContent = "🧠 اختر الرموز التي ظهرت!";
     isChallengePhase = true;
@@ -149,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   }
 
-  // التعامل مع الاختيارات
   function handleChoice(btn, symbol) {
     if (!isChallengePhase || btn.classList.contains("correct") || btn.classList.contains("wrong")) return;
     if (attemptsUsed >= maxAttempts) return;
@@ -177,25 +137,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // نهاية الجولة
   function endRound() {
     isChallengePhase = false;
-    inRound = false;
-    startBtn.disabled = false;
 
-    let result = correctCount > wrongCount
-      ? "🎉 ممتاز! لقد فزت بالجولة!"
-      : "❌ للأسف، خسرت الجولة!";
-
-    statusEl.textContent = result;
-    endTitle.textContent = result;
-    const playerText = gameMode === "duo" ? `اللاعبة ${currentPlayer}` : "zxi2j.03";
-    endSummary.textContent = `✅ صحيحة: ${correctCount} — ❌ خاطئة: ${wrongCount} — 👤 ${playerText}`;
-    endScreen.classList.remove("hidden");
+    if (correctCount > wrongCount) {
+      statusEl.textContent = "🎉 ممتاز! لقد فزت بالجولة!";
+    } else {
+      statusEl.textContent = "❌ للأسف، خسرت الجولة!";
+    }
 
     if (gameMode === "duo") {
       currentPlayer = currentPlayer === 1 ? 2 : 1;
       updateLabels();
     }
   }
+
+  startBtn.addEventListener("click", () => {
+    startRound();
+  });
 });
