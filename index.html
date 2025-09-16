@@ -8,13 +8,23 @@
 </head>
 <body>
 
-  <header class="hud">
+  <!-- شاشة البداية -->
+  <div id="startScreen" class="overlay">
+    <div class="card">
+      <h2>🎮 مرحبًا بك في لعبة ذاكرة الرموز</h2>
+      <button id="enterBtn" class="btn">ابدأ اللعبة</button>
+    </div>
+  </div>
+
+  <!-- شريط المعلومات -->
+  <header class="hud hidden">
     <div class="pill">👤 الدور: <span id="playerLabel">—</span></div>
     <div class="pill">🧠 النقاط: <span id="scoreLabel">0</span></div>
     <div class="pill">⏱️ الوقت: <span id="timerLabel">—</span></div>
   </header>
 
-  <main class="container">
+  <!-- منطقة اللعبة -->
+  <main class="container hidden">
     <h1 class="title">ذاكرة الرموز</h1>
 
     <div id="setupPanel" class="panel">
@@ -42,7 +52,8 @@
     <div id="grid" class="grid"></div>
   </main>
 
-  <div id="branding">
+  <!-- توقيع شخصي -->
+  <div id="branding" class="hidden">
     <img src="lee-photo.png" alt="Lee" id="profilePic" />
     <span id="username">Lee</span>
   </div>
@@ -52,10 +63,4 @@
     <div class="card">
       <h2 id="endTitle">—</h2>
       <p id="endSummary">—</p>
-      <button id="restartBtn" class="btn">🔁 جولة جديدة</button>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+      <button id="restartBtn" class="btn">
