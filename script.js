@@ -6,12 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const timerLabel = document.getElementById("timerLabel");
   const playerLabel = document.getElementById("playerLabel");
 
+  const endScreen = document.getElementById("endScreen");
+  const endTitle = document.getElementById("endTitle");
+  const endSummary = document.getElementById("endSummary");
+  const restartBtn = document.getElementById("restartBtn");
+  const hud = document.getElementById("hud");
+  const container = document.getElementById("container");
+  const branding = document.getElementById("branding");
+
   const emojis = ["🐱", "🍕", "🚀", "🎈", "🐶", "🌸", "🦄", "🍩", "🎮", "🐼", "🍉", "🧸", "🦋", "🍔", "🐧"];
   const pastelColors = ["#FADADD", "#D0E8F2", "#FFFACD", "#E6DAF8", "#D4F8D4"];
 
   let showing = [];
   let scoreP1 = 0;
   let scoreP2 = 0;
+  let totalScoreP1 = 0;
+  let totalScoreP2 = 0;
   let currentPlayer = 1;
   let gameMode = "solo";
   let difficulty = "easy";
@@ -31,8 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateLabels() {
     playerLabel.textContent = gameMode === "duo" ? `اللاعبة ${currentPlayer}` : "فردي";
     scoreLabel.textContent = gameMode === "duo"
-      ? (currentPlayer === 1 ? scoreP1 : scoreP2)
-      : scoreP1;
+      ? `${currentPlayer === 1 ? scoreP1 : scoreP2} (الإجمالي: ${currentPlayer === 1 ? totalScoreP1 : totalScoreP2})`
+      : `${scoreP1} (الإجمالي: ${totalScoreP1})`;
   }
 
   function startRound() {
@@ -121,8 +131,10 @@ document.addEventListener("DOMContentLoaded", () => {
       correctCount++;
       if (gameMode === "duo") {
         currentPlayer === 1 ? scoreP1++ : scoreP2++;
+        currentPlayer === 1 ? totalScoreP1++ : totalScoreP2++;
       } else {
         scoreP1++;
+        totalScoreP1++;
       }
     } else {
       btn.classList.add("wrong");
@@ -140,19 +152,35 @@ document.addEventListener("DOMContentLoaded", () => {
   function endRound() {
     isChallengePhase = false;
 
-    if (correctCount > wrongCount) {
-      statusEl.textContent = "🎉 ممتاز! لقد فزت بالجولة!";
-    } else {
-      statusEl.textContent = "❌ للأسف، خسرت الجولة!";
-    }
+    const result = correctCount > wrongCount
+      ? "🎉 ممتاز! لقد فزت بالجولة!"
+      : "❌ للأسف، خسرت الجولة!";
+    statusEl.textContent = result;
+
+    endTitle.textContent = result;
+    endSummary.textContent = `✅ صحيحة: ${correctCount} — ❌ خاطئة: ${wrongCount}`;
+    container.classList.add("hidden");
+    hud.classList.add("hidden");
+    branding.classList.add("hidden");
+    endScreen.classList.remove("hidden");
 
     if (gameMode === "duo") {
       currentPlayer = currentPlayer === 1 ? 2 : 1;
+      scoreP1 = 0;
+      scoreP2 = 0;
       updateLabels();
     }
   }
 
   startBtn.addEventListener("click", () => {
+    startRound();
+  });
+
+  restartBtn.addEventListener("click", () => {
+    endScreen.classList.add("hidden");
+    container.classList.remove("hidden");
+    hud.classList.remove("hidden");
+    branding.classList.remove("hidden");
     startRound();
   });
 });
