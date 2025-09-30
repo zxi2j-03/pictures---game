@@ -39,4 +39,35 @@
       </div>
 
       <div class="group">
-        <label class="label">
+        <label class="label">اختر مستوى الصعوبة:</label>
+        <div class="row">
+          <label class="chip"><input type="radio" name="difficulty" value="easy" checked /> سهل (6)</label>
+          <label class="chip"><input type="radio" name="difficulty" value="medium" /> متوسط (9)</label>
+          <label class="chip"><input type="radio" name="difficulty" value="hard" /> صعب (12)</label>
+        </div>
+      </div>
+
+      <button id="startBtn" class="btn primary" type="button">ابدأ الجولة</button>
+    </div>
+
+    <div id="status" class="status">اختر النمط والصعوبة ثم اضغط "ابدأ الجولة"</div>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <!-- توقيع شخصي -->
+  <div id="branding" class="branding hidden">
+    <span id="username">zxi2j.03</span>
+    <img src="Tessa.jpg" alt="zxi2j.03" id="profilePic" />
+  </div>
+
+  <!-- شاشة النهاية -->
+  <div id="endScreen" class="overlay hidden">
+    <div class="card">
+      <h2 id="endTitle">—</h2>
+      <p id="endSummary">—</p>
+      <button id="restartBtn" class="btn" type="button">🔁 جولة جديدة</button>
+    </div>
+  </div>
+
+</body>
+</html>
