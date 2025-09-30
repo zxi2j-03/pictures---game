@@ -1,37 +1,53 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const grid = document.getElementById("grid");
+  const enterBtn = document.getElementById("enterBtn");
   const startBtn = document.getElementById("startBtn");
+  const restartBtn = document.getElementById("restartBtn");
+
+  const startScreen = document.getElementById("startScreen");
+  const hud = document.getElementById("hud");
+  const container = document.getElementById("container");
+  const branding = document.getElementById("branding");
+  const endScreen = document.getElementById("endScreen");
+
+  const grid = document.getElementById("grid");
   const statusEl = document.getElementById("status");
   const scoreLabel = document.getElementById("scoreLabel");
   const timerLabel = document.getElementById("timerLabel");
   const playerLabel = document.getElementById("playerLabel");
-
-  const endScreen = document.getElementById("endScreen");
   const endTitle = document.getElementById("endTitle");
   const endSummary = document.getElementById("endSummary");
-  const restartBtn = document.getElementById("restartBtn");
-  const hud = document.getElementById("hud");
-  const container = document.getElementById("container");
-  const branding = document.getElementById("branding");
 
   const emojis = ["🐱", "🍕", "🚀", "🎈", "🐶", "🌸", "🦄", "🍩", "🎮", "🐼", "🍉", "🧸", "🦋", "🍔", "🐧"];
   const pastelColors = ["#FADADD", "#D0E8F2", "#FFFACD", "#E6DAF8", "#D4F8D4"];
 
   let showing = [];
-  let scoreP1 = 0;
-  let scoreP2 = 0;
-  let totalScoreP1 = 0;
-  let totalScoreP2 = 0;
+  let scoreP1 = 0, scoreP2 = 0;
+  let totalScoreP1 = 0, totalScoreP2 = 0;
   let currentPlayer = 1;
-  let gameMode = "solo";
-  let difficulty = "easy";
-  let timer;
-  let timeLeft = 0;
+  let gameMode = "solo", difficulty = "easy";
+  let timer, timeLeft = 0;
   let isChallengePhase = false;
-  let maxAttempts = 0;
-  let attemptsUsed = 0;
-  let correctCount = 0;
-  let wrongCount = 0;
+  let maxAttempts = 0, attemptsUsed = 0;
+  let correctCount = 0, wrongCount = 0;
+
+  enterBtn.addEventListener("click", () => {
+    startScreen.classList.add("hidden");
+    hud.classList.remove("hidden");
+    container.classList.remove("hidden");
+    branding.classList.remove("hidden");
+  });
+
+  restartBtn.addEventListener("click", () => {
+    endScreen.classList.add("hidden");
+    container.classList.remove("hidden");
+    hud.classList.remove("hidden");
+    branding.classList.remove("hidden");
+    startRound();
+  });
+
+  startBtn.addEventListener("click", () => {
+    startRound();
+  });
 
   function setRandomBackground() {
     const color = pastelColors[Math.floor(Math.random() * pastelColors.length)];
@@ -117,70 +133,4 @@ document.addEventListener("DOMContentLoaded", () => {
         clearInterval(timer);
         endRound();
       }
-    }, 1000);
-  }
-
-  function handleChoice(btn, symbol) {
-    if (!isChallengePhase || btn.classList.contains("correct") || btn.classList.contains("wrong")) return;
-    if (attemptsUsed >= maxAttempts) return;
-
-    attemptsUsed++;
-
-    if (showing.includes(symbol)) {
-      btn.classList.add("correct");
-      correctCount++;
-      if (gameMode === "duo") {
-        currentPlayer === 1 ? scoreP1++ : scoreP2++;
-        currentPlayer === 1 ? totalScoreP1++ : totalScoreP2++;
-      } else {
-        scoreP1++;
-        totalScoreP1++;
-      }
-    } else {
-      btn.classList.add("wrong");
-      wrongCount++;
-    }
-
-    updateLabels();
-
-    if (attemptsUsed === maxAttempts) {
-      clearInterval(timer);
-      endRound();
-    }
-  }
-
-  function endRound() {
-    isChallengePhase = false;
-
-    const result = correctCount > wrongCount
-      ? "🎉 ممتاز! لقد فزت بالجولة!"
-      : "❌ للأسف، خسرت الجولة!";
-    statusEl.textContent = result;
-
-    endTitle.textContent = result;
-    endSummary.textContent = `✅ صحيحة: ${correctCount} — ❌ خاطئة: ${wrongCount}`;
-    container.classList.add("hidden");
-    hud.classList.add("hidden");
-    branding.classList.add("hidden");
-    endScreen.classList.remove("hidden");
-
-    if (gameMode === "duo") {
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      scoreP1 = 0;
-      scoreP2 = 0;
-      updateLabels();
-    }
-  }
-
-  startBtn.addEventListener("click", () => {
-    startRound();
-  });
-
-  restartBtn.addEventListener("click", () => {
-    endScreen.classList.add("hidden");
-    container.classList.remove("hidden");
-    hud.classList.remove("hidden");
-    branding.classList.remove("hidden");
-    startRound();
-  });
-});
+    }, 
