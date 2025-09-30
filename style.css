@@ -1,5 +1,5 @@
 :root {
-  --pill-bg: rgba(255,255,255,0.3);
+  --pill-bg: rgba(255, 255, 255, 0.3);
   --tile: #ffffff;
   --tile-hover: #f0f0f0;
   --correct: #c6f6c6;
@@ -7,12 +7,15 @@
   --text: #444;
 }
 
+/* إعداد عام */
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
   transition: background 0.5s ease;
+  background: #fdfdfd;
 }
 
+/* HUD */
 .hud {
   position: fixed;
   top: 12px;
@@ -30,19 +33,20 @@ body {
   color: var(--text);
 }
 
+/* منطقة اللعبة */
 .container {
   max-width: 720px;
   margin: 80px auto 60px;
   text-align: center;
   color: var(--text);
 }
-
 .title {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 12px;
 }
 
+/* إعدادات النمط والصعوبة */
 .group {
   margin: 12px 0;
 }
@@ -65,8 +69,11 @@ body {
   align-items: center;
   gap: 6px;
 }
-.chip input { accent-color: #999; }
+.chip input {
+  accent-color: #999;
+}
 
+/* الأزرار */
 .btn {
   background: #ffd6e0;
   color: #333;
@@ -74,19 +81,22 @@ body {
   padding: 10px 16px;
   border-radius: 10px;
   cursor: pointer;
+  font-size: 16px;
 }
 .btn:hover {
   background: #ffc2d4;
 }
 
+/* الحالة */
 .status {
   margin: 12px 0;
   font-size: 16px;
-  background: rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.4);
   padding: 8px 12px;
   border-radius: 10px;
 }
 
+/* الشبكة */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -113,16 +123,18 @@ body {
   background: var(--wrong);
 }
 
+/* التوقيع الشخصي */
 #branding {
   position: fixed;
   bottom: 12px;
   left: 12px;
-  background: rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.4);
   padding: 8px 12px;
   border-radius: 999px;
   display: flex;
   align-items: center;
   gap: 10px;
+  z-index: 5;
 }
 #profilePic {
   width: 32px;
@@ -134,4 +146,31 @@ body {
 #username {
   font-weight: bold;
   color: #333;
+}
+
+/* شاشة البداية والنهاية */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+.card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+}
+
+/* إخفاء العناصر */
+.hidden {
+  display: none !important;
 }
